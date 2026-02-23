@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <h4 class="mb-4 text-center">
+                    Изменение данных сотрудника
+                </h4>
+
+                <form method="POST">
+
+                    <!-- Табельный номер и ПИНФЛ -->
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Табельный номер</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="{{ employee[1] }}"
+                                   disabled>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">ПИНФЛ</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="{{ employee[2] }}"
+                                   disabled>
+                        </div>
+                    </div>
+
+                    <!-- Фамилия и Имя -->
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Фамилия</label>
+                            <input type="text"
+                                   name="last_name"
+                                   class="form-control"
+                                   value="{{ employee[3] }}"
+                                   required>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Имя</label>
+                            <input type="text"
+                                   name="first_name"
+                                   class="form-control"
+                                   value="{{ employee[4] }}"
+                                   required>
+                        </div>
+                    </div>
+
+                    <!-- Гражданство -->
+                    <div class="mb-3">
+                        <label class="form-label">Гражданство</label>
+                        <select name="citizenship_country_id"
+                                class="form-select"
+                                required>
+                            {% for c in countries %}
+                                <option value="{{ c[0] }}"
+                                    {% if c[0] == employee[7] %}selected{% endif %}>
+                                    {{ c[1] }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Дата приема и зарплата -->
+                    <div class="row mb-4">
+                        <div class="col">
+                            <label class="form-label">Дата приема</label>
+                            <input type="date"
+                                   name="hire_date"
+                                   class="form-control"
+                                   value="{{ employee[5] }}"
+                                   required>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Зарплата</label>
+                            <input type="number"
+                                   step="0.01"
+                                   name="salary"
+                                   class="form-control"
+                                   value="{{ employee[6] }}"
+                                   required>
+                        </div>
+                    </div>
+
+                    <!-- Кнопки -->
+                    <div class="d-flex justify-content-between">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Сохранить изменения
+                        </button>
+
+                        <a href="{{ url_for('search_employee') }}"
+                           class="btn btn-outline-secondary">
+                            Назад
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

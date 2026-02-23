@@ -1,0 +1,194 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <h4 class="mb-4 text-center">Регистрация сотрудника</h4>
+
+                <form method="POST" action="{{ url_for('new_employee') }}">
+
+                    <!-- ПИНФЛ -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            ПИНФЛ
+                        </label>
+
+                        <input type="text"
+                               name="pinfl"
+                               class="form-control"
+                               pattern="\d{14}"
+                               maxlength="14"
+                               inputmode="numeric"
+                               required>
+
+                        <div class="form-text">
+                            ПИНФЛ должен состоять из 14 цифр.
+                        </div>
+                    </div>
+
+                    <!-- ФИО -->
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Фамилия</label>
+                            <input type="text"
+                                   name="last_name"
+                                   class="form-control"
+                                   required>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Имя</label>
+                            <input type="text"
+                                   name="first_name"
+                                   class="form-control"
+                                   required>
+                        </div>
+                    </div>
+
+                    <!-- Пол и дата рождения -->
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Пол</label>
+                            <select name="gender"
+                                    class="form-select"
+                                    required>
+                                <option value="male">Мужской</option>
+                                <option value="female">Женский</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Дата рождения</label>
+                            <input type="date"
+                                   name="birth_date"
+                                   class="form-control"
+                                   required>
+                        </div>
+                    </div>
+
+                    <!-- Гражданство -->
+                    <div class="mb-3">
+                        <label class="form-label">Гражданство</label>
+                        <select name="citizenship_country_id"
+                                class="form-select"
+                                required>
+                            {% for c in countries %}
+                                <option value="{{ c[0] }}">
+                                    {{ c[1] }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Паспорт -->
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Серия паспорта</label>
+                            <input type="text"
+                                   name="passport_series"
+                                   class="form-control"
+                                   required>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Номер паспорта</label>
+                            <input type="text"
+                                   name="passport_number"
+                                   class="form-control"
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Дата выдачи</label>
+                            <input type="date"
+                                   name="passport_issue_date"
+                                   class="form-control"
+                                   required>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Кем выдан</label>
+                            <input type="text"
+                                   name="passport_issued_by"
+                                   class="form-control"
+                                   required>
+                        </div>
+                    </div>
+
+                    <!-- Контакты -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Телефон
+                        </label>
+
+                        <input type="text"
+                               name="phone"
+                               class="form-control"
+                               pattern="\d+"
+                               inputmode="numeric"
+                               required>
+
+                        <div class="form-text">
+                            Телефон должен содержать только цифры.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Адрес регистрации</label>
+                        <input type="text"
+                               name="registration_address"
+                               class="form-control"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Адрес проживания</label>
+                        <input type="text"
+                               name="residence_address"
+                               class="form-control"
+                               required>
+                    </div>
+
+                    <!-- Прием и зарплата -->
+                    <div class="row mb-4">
+                        <div class="col">
+                            <label class="form-label">Дата приема</label>
+                            <input type="date"
+                                   name="hire_date"
+                                   class="form-control"
+                                   required>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Зарплата</label>
+                            <input type="number"
+                                   step="0.01"
+                                   name="salary"
+                                   class="form-control"
+                                   required>
+                        </div>
+                    </div>
+
+                    <!-- Кнопки -->
+                    <div class="d-flex justify-content-between">
+                        <button type="submit"
+                                class="btn btn-success">
+                            Сохранить
+                        </button>
+
+                        <a href="{{ url_for('dashboard') }}"
+                           class="btn btn-outline-secondary">
+                            Назад
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

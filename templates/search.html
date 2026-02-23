@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h4 class="mb-4">Поиск сотрудника</h4>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+
+        <form method="POST">
+
+            <div class="row mb-3">
+
+                <div class="col-md-3">
+                    <label class="form-label">Фамилия</label>
+                    <input type="text"
+                           name="last_name"
+                           class="form-control"
+                           placeholder="Иванов">
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Имя</label>
+                    <input type="text"
+                           name="first_name"
+                           class="form-control"
+                           placeholder="Иван">
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">ПИНФЛ</label>
+                    <input type="text"
+                           name="pinfl"
+                           class="form-control"
+                           placeholder="14 цифр">
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Табельный номер</label>
+                    <input type="text"
+                           name="personnel_number"
+                           class="form-control"
+                           placeholder="HR-00001">
+                </div>
+
+            </div>
+
+            <div class="text-end">
+                <button class="btn btn-primary">
+                    Найти
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+{% if employees %}
+
+<div class="card shadow-sm">
+    <div class="card-body">
+
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>ПИНФЛ</th>
+                    <th>Табельный номер</th>
+                    <th class="text-center">Действия</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for e in employees %}
+                <tr>
+                    <td>{{ e[1] }}</td>
+                    <td>{{ e[2] }}</td>
+                    <td>{{ e[3] }}</td>
+                    <td>{{ e[4] }}</td>
+
+                    <td class="text-center">
+
+                        <div class="btn-group btn-group-sm" role="group">
+
+                            <!-- Просмотр -->
+                            <a href="{{ url_for('view_employee', employee_id=e[0]) }}"
+                               class="btn btn-primary">
+                                Просмотр
+                            </a>
+
+                            <!-- Изменить -->
+                            <a href="{{ url_for('edit_employee', employee_id=e[0]) }}"
+                               class="btn btn-success">
+                                Изменить
+                            </a>
+
+                            <!-- Больничный -->
+                            <a href="{{ url_for('sick_leave', employee_id=e[0]) }}"
+                               class="btn btn-warning">
+                                Больничный
+                            </a>
+
+                            <!-- Отпуск -->
+                            <a href="{{ url_for('vacation', employee_id=e[0]) }}"
+                               class="btn btn-info">
+                                Отпуск
+                            </a>
+
+                        </div>
+
+                        <!-- Удалить отдельно -->
+                        <form action="{{ url_for('delete_employee', employee_id=e[0]) }}"
+                              method="POST"
+                              style="display:inline;">
+                            <button class="btn btn-danger btn-sm mt-1"
+                                    onclick="return confirm('Удалить сотрудника?')">
+                                Удалить
+                            </button>
+                        </form>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}
